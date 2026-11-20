@@ -100,7 +100,7 @@ const icons={"All":"✨","Books":"📚","Electronics":"🎧","Clothes":"👕","F
 function persist(){localStorage.setItem("reusemart_products",JSON.stringify(products));localStorage.setItem("reusemart_saved",JSON.stringify(saved));}
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
 function renderCategories(){let cats=["All",...Object.keys(icons).filter(x=>x!=="All")];document.getElementById("categories").innerHTML=cats.map(c=>`<button class="cat ${category===c?'selected':''}" onclick="setCategory('${c}')">${icons[c]} ${c}</button>`).join("");}
-function card(p){
+function card(p){return `<article class="card"><div class="photo">function card(p){
 return `
 <article class="card">
   <div class="photo">
