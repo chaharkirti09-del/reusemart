@@ -102,26 +102,6 @@ function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",
 function renderCategories(){let cats=["All",...Object.keys(icons).filter(x=>x!=="All")];document.getElementById("categories").innerHTML=cats.map(c=>`<button class="cat ${category===c?'selected':''}" onclick="setCategory('${c}')">${icons[c]} ${c}</button>`).join("");}
 function card(p){return `<article class="card"><div class="photo">function card(p){
 return `
-<article class="card">
-  <div class="photo">
-    ${p.photo
-      ? `<img src="${p.photo}" alt="${esc(p.title)}">`
-      : p.emoji || icons[p.category] || "♻️"}
-  </div>
-
-  <div class="cardbody">
-    <h3>${esc(p.title)}</h3>
-    <div class="price">₹${Number(p.price).toLocaleString("en-IN")}</div>
-    <div class="meta">${esc(p.condition)} · ${esc(p.location)}</div>
-
-    <div class="cardactions">
-      <button class="outline" onclick="toggleSave('${p.id}')">
-        ${saved.includes(p.id) ? "♥ Saved" : "♡ Save"}
-      </button>
-      <button onclick="contactSeller('${p.id}')">Enquire</button>
-    </div>
-  </div>
-</article>`;
 }">${p.photo?`<img src="${p.photo}" alt="${esc(p.title)}">`:p.emoji||icons[p.category]||"♻️"}</div><div class="cardbody"><h3>${esc(p.title)}</h3><div class="price">₹${Number(p.price).toLocaleString("en-IN")}</div><div class="meta">${esc(p.category)} · ${esc(p.condition)} · ${esc(p.location)}</div><p class="meta">${esc(p.description||"")}</p><div class="cardactions"><button class="outline" onclick="toggleSave('${p.id}')">${saved.includes(p.id)?"♥ Saved":"♡ Save"}</button><button onclick="contactSeller('${p.id}')">Enquire</button></div></div></article>`}
 function renderGrid(target,items){document.getElementById(target).innerHTML=items.length?items.map(card).join(""):'<div class="empty" style="grid-column:1/-1">No items here yet.</div>';}
 function render(){renderCategories();let q=document.getElementById("search").value.toLowerCase();let sort=document.getElementById("sort").value;let list=products.filter(p=>(category==="All"||p.category===category)&&(p.title+" "+p.category+" "+p.location).toLowerCase().includes(q));if(sort==="low")list.sort((a,b)=>a.price-b.price);if(sort==="high")list.sort((a,b)=>b.price-a.price);document.getElementById("count").textContent=list.length+" items";renderGrid("productGrid",list);renderGrid("savedGrid",products.filter(p=>saved.includes(p.id)));renderGrid("myGrid",products.filter(p=>p.owner==="me"));document.getElementById("adminCount").textContent=products.length+" demo listings";}
